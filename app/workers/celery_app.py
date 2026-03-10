@@ -19,5 +19,7 @@ celery_app.conf.update(
     task_time_limit=30 * 60,  # 30 minutes hard limit
     task_soft_time_limit=25 * 60,  # 25 minutes soft limit
 )
+# Auto-discover tasks from all registered apps
+celery_app.autodiscover_tasks(["app.workers"])
 
 

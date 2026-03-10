@@ -6,7 +6,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/api", tags=["documents"])
+router = APIRouter(tags=["documents"])
 
 
 @router.post("/upload")
