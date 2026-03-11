@@ -1,6 +1,10 @@
 from celery import Celery
+import logging
 
 from app.core.config import CELERY_BROKER_URL,CELERY_RESULT_BACKEND
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
 
 # Initialize Celery app
 celery_app = Celery(
@@ -22,5 +26,8 @@ celery_app.conf.update(
 )
 # Auto-discover tasks from all registered apps
 celery_app.autodiscover_tasks(["app.workers"])
+
+# Explicitly import tasks to ensure they're registered
+from app.workers import tasks  # noqa: F401, E402
 
 

@@ -2,6 +2,7 @@ from fastapi import APIRouter, UploadFile, File, HTTPException
 import shutil
 import os
 from app.workers.tasks import process_document
+from app.workers.celery_app import celery_app
 import logging
 
 logger = logging.getLogger(__name__)
@@ -42,12 +43,18 @@ async def upload_document(file: UploadFile = File(...)):
 
 @router.get("/task/{task_id}")
 async def get_task_status(task_id: str):
-    """Get status of a processing task"""
-    from app.workers.celery_app import celery_app
-    
+    """Get status of a document processing task"""
+
     result = celery_app.AsyncResult(task_id)
-    return {
+
+    response = {
         "task_id": task_id,
-        "status": result.status,
-        "result": result.result if result.ready() else None
+        "status": result.status.lower()
     }
+
+    if result.ready():
+        task_result = result.result
+
+        response["data"] = task_result.get("structured_data")
+
+    return response
