@@ -23,7 +23,9 @@ def process_document(self, file_path: str, document_type: str):
 
         # Step 2 — Send text to LLM
         logger.info("Step 2: Sending extracted text to LLM for structured extraction...")
+        logger.debug(f"Extracted text length::::::: {text}")
         structured_data = LLMExtractor.extract_invoice_data(text)
+        logger.info(f"LLM extraction completed <<->> Extracted fields: {structured_data}")
         
         if "error" in structured_data:
             logger.error(f"LLM extraction error: {structured_data['error']}")

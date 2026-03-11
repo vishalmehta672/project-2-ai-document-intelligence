@@ -10,6 +10,7 @@ class InvoiceSchema(BaseModel):
 
     invoice_number: Optional[str]
     vendor_name: Optional[str]
+    buyer_name: Optional[str]
     invoice_date: Optional[date]
     total_amount: Optional[float]
     tax_amount: Optional[float]

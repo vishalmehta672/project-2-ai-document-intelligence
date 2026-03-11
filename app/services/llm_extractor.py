@@ -33,6 +33,7 @@ class LLMExtractor:
             Required fields:
             - invoice_number: The invoice or document number (string)
             - vendor_name: The company/vendor name that issued the invoice (string)
+            - buyer_name: The company/buyer name that received the invoice (string)
             - invoice_date: The invoice date in YYYY-MM-DD format (string)
             - total_amount: The total amount as a number WITHOUT currency symbols (float, e.g., 2665.18)
             - tax_amount: The tax amount as a number WITHOUT currency symbols (float)
@@ -96,6 +97,9 @@ class LLMExtractor:
         
         # Vendor name - keep as string
         cleaned['vendor_name'] = data.get('vendor_name')
+        
+        # Buyer name - keep as string
+        cleaned['buyer_name'] = data.get('buyer_name')
         
         # Invoice date - convert to YYYY-MM-DD format
         invoice_date = data.get('invoice_date')
