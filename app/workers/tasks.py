@@ -1,18 +1,9 @@
+from app.services.pdf_parser import extract_text_from_pdf
 from app.workers.celery_app import celery_app
 import logging
 import fitz  # PyMuPDF
 
 logger = logging.getLogger(__name__)
-
-
-def extract_text_from_pdf(file_bytes: bytes):
-    """Extract text from PDF file"""
-    pdf = fitz.open(stream=file_bytes, filetype="pdf")
-    text = ""
-    for page in pdf:
-        text += page.get_text()
-    pdf.close()
-    return text
 
 
 @celery_app.task(bind=True, name="process_document", max_retries=3)

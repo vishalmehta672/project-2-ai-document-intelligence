@@ -1,11 +1,12 @@
 from celery import Celery
-from app.config import settings
+
+from app.core.config import CELERY_BROKER_URL,CELERY_RESULT_BACKEND
 
 # Initialize Celery app
 celery_app = Celery(
     "document_intelligence",
-    broker=settings.CELERY_BROKER_URL,
-    backend=settings.CELERY_RESULT_BACKEND,
+    broker=CELERY_BROKER_URL,
+    backend=CELERY_RESULT_BACKEND,
 )
 
 # Celery configuration
